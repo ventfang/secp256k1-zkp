@@ -105,6 +105,15 @@ endif
 tests_LDADD = $(SECP_LIBS) $(SECP_TEST_LIBS) $(COMMON_LIB)
 tests_LDFLAGS = -static
 TESTS += tests
+
+noinst_PROGRAMS += playground
+playground_SOURCES = src/playground.c
+playground_CPPFLAGS = -DSECP256K1_BUILD -I$(top_srcdir)/src -I$(top_srcdir)/include $(SECP_INCLUDES) $(SECP_TEST_INCLUDES)
+if !ENABLE_COVERAGE
+playground_CPPFLAGS += -DVERIFY
+endif
+playground_LDADD = $(SECP_LIBS) $(COMMON_LIB)
+playground_LDFLAGS = -static
 endif
 
 if USE_EXHAUSTIVE_TESTS
